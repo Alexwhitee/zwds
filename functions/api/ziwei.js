@@ -115,8 +115,8 @@ async function handleZiweiInterpret(selectedModel, astrolabeData, provider, env)
 
 ## 解读规则
 1.  **宏观格局分析**:
-    *   首先，判断命主的命宫主星（`astrolabe.palaces[命宫位置].mainStars`）是什么，根据主星组合判断其核心性格特质、优点和潜在挑战。
-    *   分析命宫、身宫（`astrolabe.gender` + `astrolabe.earthlyBranchOfSoulPalace`）的组合，说明先天性格与后天行事风格的特点。
+    *   首先，判断命主的命宫主星是什么，根据主星组合判断其核心性格特质、优点和潜在挑战。
+    *   分析命宫、身宫的组合，说明先天性格与后天行事风格的特点。
     *   简要提及命盘的基本格局，例如“杀破狼”格、“机月同梁”格等（如果明显）。
 
 2.  **重点宫位解读**:
