@@ -1,35 +1,222 @@
+/* 全局和基础样式 */
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background-color: #f0f2f5; /* 给页面一个柔和的背景色 */
+    color: #333;
+}
+
+/* 主容器，现在采用垂直布局 */
 .container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column; /* 核心改动：从 row 改为 column */
+    align-items: center; /* 在水平方向上居中子元素 */
     gap: 20px;
-    padding: 20px;
+    padding: 15px; /* 调整内边距，在手机上看起来更舒服 */
+    box-sizing: border-box; /* 确保 padding 不会影响总宽度 */
+    width: 100%;
 }
 
-.form-container {
-    width: 300px;
+/* 输入区域的样式 */
+.input-section {
+    width: 100%;
+    max-width: 800px; /* 在大屏幕上限制最大宽度，避免表单过长 */
+    background-color: #ffffff;
     padding: 20px;
-    border: 1px solid #ccc;
     border-radius: 8px;
-    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
 }
 
+.input-section h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #5c2c90; /* 一个紫色调，呼应紫微斗数 */
+}
+
+/* 表单容器，现在使用 flex 布局以适应不同屏幕 */
+.form-container {
+    display: flex;
+    flex-wrap: wrap; /* 允许表单项换行 */
+    gap: 15px; /* 表单项之间的间距 */
+    justify-content: center; /* 居中表单项 */
+}
+
+/* 每个表单项 */
 .form-item {
-    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column; /* 标签在上，输入框在下 */
+    gap: 5px;
+    flex: 1 1 200px; /* flex-grow, flex-shrink, flex-basis。允许伸缩，基础宽度200px */
 }
 
 .form-item label {
-    display: block;
-    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 0.9rem;
 }
 
+/* 输入框和下拉选择框的通用样式 */
 .form-item input,
 .form-item select {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 6px;
+    font-size: 1rem; /* 确保在移动设备上字体不会过小 */
+    box-sizing: border-box;
 }
 
+/* 斗数盘容器 */
 .chart-container {
-    flex: 1;
+    width: 100%;
+    /* 确保命盘容器本身是响应式的 */
+}
+
+/* 响应式设计：针对桌面等大屏幕的微调 */
+@media (min-width: 768px) {
+    .container {
+        padding: 30px; /* 在大屏幕上增加内边距 */
+    }
+
+    .form-container {
+        /* 在大屏幕上，让表单项并排显示更紧凑 */
+        flex-wrap: nowrap; /* 不换行 */
+    }
+
+    .input-section {
+        /* 你可以按需调整大屏幕下的样式 */
+    }
+
+
+
+
+    /* --- AI 解读区域样式 --- */
+    .ai-interpretation-section {
+        width: 100%;
+        max-width: 800px;
+        margin-top: 25px;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        box-sizing: border-box;
+    }
+
+    .ai-interpretation-section h3 {
+        text-align: center;
+        margin-top: 0;
+        color: #5c2c90;
+    }
+
+    .ai-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .ai-form-item {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        flex: 1 1 200px;
+    }
+
+    .ai-form-item-full {
+        flex-basis: 100%;
+    }
+
+    .ai-form-item label {
+        font-weight: 500;
+        font-size: 0.9rem;
+    }
+
+    .ai-form-item select,
+    .ai-form-item textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 1rem;
+        box-sizing: border-box;
+        font-family: inherit; /* 继承父级字体 */
+    }
+
+    .ai-form-item textarea {
+        resize: vertical; /* 允许用户垂直调整大小 */
+    }
+
+    .ai-submit-button {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: #fff;
+        background-color: #6a3da3;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .ai-submit-button:hover:not(:disabled) {
+        background-color: #5c2c90;
+    }
+
+    .ai-submit-button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+    .ai-response-area {
+        margin-top: 20px;
+    }
+
+    .ai-error {
+        color: #d9534f;
+        background-color: #f2dede;
+        border: 1px solid #ebccd1;
+        border-radius: 4px;
+        padding: 10px;
+    }
+
+    .ai-response {
+        background-color: #f9f9f9;
+        border: 1px solid #e7e7e7;
+        border-radius: 6px;
+        padding: 15px;
+        min-height: 100px;
+    }
+
+    .ai-response pre {
+        white-space: pre-wrap; /* 关键：让文本自动换行 */
+        word-wrap: break-word;
+        font-family: inherit;
+        font-size: 0.95rem;
+        margin: 0;
+        line-height: 1.6;
+    }
+
+    /* 加载动画 */
+    .loader {
+        border: 4px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 4px solid #5c2c90;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+
+
 }
