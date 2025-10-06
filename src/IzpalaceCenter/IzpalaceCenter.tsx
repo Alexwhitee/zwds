@@ -317,9 +317,7 @@ export const IzpalaceCenter = ({
         href="https://github.com/sylarlong/iztro"
         target="_blank"
       >
-        <i>
-          Powered by <code>iztro</code>
-        </i>
+
       </a>
     </div>
   );
