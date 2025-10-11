@@ -653,7 +653,8 @@ function App() {
   // --- AI 相关 State ---
   const [astrolabeData, setAstrolabeData] = useState<AstrolabeData | null>(null);
   const [horoscopeData, setHoroscopeData] = useState<HoroscopeData | null>(null);
-  const [selectedModel, setSelectedModel] = useState('Qwen/Qwen2.5-72B-Instruct');
+  //const [selectedModel, setSelectedModel] = useState('Qwen/Qwen2.5-72B-Instruct');
+  const [selectedModel, setSelectedModel] = useState('Qwen/Qwen3-Next-80B-A3B-Instruct');
   const [aiQuestion, setAiQuestion] = useState('请帮我分析一下我的事业运势。');
   const [aiResponse, setAiResponse] = useState('');
   const [isLoadingAI, setIsLoadingAI] = useState(false);
@@ -662,15 +663,52 @@ function App() {
   // --- JSON 查看器 State ---
   const [isJsonVisible, setIsJsonVisible] = useState(false);
 
+  // const modelOptions = [
+  //   {
+  //     label: 'MO',
+  //     options: [
+  //       { label: 'Qwen3-Next-80B-A3B-Instruct', value: 'Qwen/Qwen3-Next-80B-A3B-Instruct' },
+  //       { label: 'DeepSeek-V3.1', value: 'deepseek-ai/DeepSeek-V3.1' },
+  //     ]
+  //   },
+  // ];
+
   const modelOptions = [
+    {
+      label: 'CE（暂不可用）',
+      options: [
+        { label: 'llama-4-scout', value: 'llama-4-scout-17b-16e-instruct' },
+        { label: 'llama3.1', value: 'llama3.1-8b' },
+        { label: 'llama-3.3', value: 'llama-3.3-70b' },
+        { label: 'gpt', value: 'gpt-oss-120b' },
+        { label: 'qwen-3', value: 'qwen-3-32b' }
+      ]
+    },
     {
       label: 'MO',
       options: [
-        { label: 'Qwen3-Next-80B-A3B-Instruct', value: 'Qwen/Qwen3-Next-80B-A3B-Instruct' },
-        { label: 'DeepSeek-V3.1', value: 'deepseek-ai/DeepSeek-V3.1' },
+        { label: 'Qwen3-Next-80B', value: 'Qwen/Qwen3-Next-80B-A3B-Instruct' },
+        { label: 'DeepSeek', value: 'deepseek-ai/DeepSeek-V3.1' },
+        { label: 'GLM', value: 'ZhipuAI/GLM-4.5' },
+        { label: 'Qwen2.5-72B', value: 'Qwen/Qwen2.5-72B-Instruct' },
+        { label: 'Llama-4-Maverick', value: 'LLM-Research/Llama-4-Maverick-17B-128E-Instruct' },
+        { label: 'Mistral-Large', value: 'mistralai/Mistral-Large-Instruct-2407' }
       ]
     },
+    {
+      label: 'BI',
+      options: [
+        { label: 'GLM', value: 'GLM-4.5-Flash' }
+      ]
+    },
+    {
+      label: 'MI',
+      options: [
+        { label: 'mistral-medium', value: 'mistral-medium-2508' }
+      ]
+    }
   ];
+
 
   // --- 数据精简函数 ---
   const pruneAstrolabeData = (data: AstrolabeData | null): PrunedAstrolabeData | null => {
