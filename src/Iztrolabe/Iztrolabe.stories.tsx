@@ -82,17 +82,36 @@ const meta: Meta<typeof IztroAstrolabe> = {
 };
 export default meta;
 
-type Story = StoryObj<typeof IztroAstrolabe>;
+// type Story = StoryObj<typeof IztroAstrolabe>;
+//
+// export const Iztrolabe: Story = (args: IztrolabeProps) => (
+//   <div style={{ height: "100vh" }}>
+//     <IztroAstrolabe
+//       {...args}
+//       horoscopeDate={
+//         args.horoscopeDate ? new Date(args.horoscopeDate) : undefined
+//       }
+//     />
+//   </div>
+// );
 
+
+// Iztrolabe.stories.tsx
+// ... (meta configuration)
+type Story = StoryObj<typeof IztroAstrolabe>;
 export const Iztrolabe: Story = (args: IztrolabeProps) => (
-  <div style={{ height: "100vh" }}>
-    <IztroAstrolabe
-      {...args}
-      horoscopeDate={
-        args.horoscopeDate ? new Date(args.horoscopeDate) : undefined
-      }
-    />
-  </div>
+    // 这个外层 div 可以用来控制 Storybook 画布中的容器大小
+    <div style={{ width: '100%', maxWidth: '800px', margin: '0 auto' }}>
+      {/* --- 在这里应用新的包裹层 --- */}
+      <div className="astrolabe-scaler-wrapper">
+        <IztroAstrolabe
+            {...args}
+            horoscopeDate={
+              args.horoscopeDate ? new Date(args.horoscopeDate) : undefined
+            }
+        />
+      </div>
+    </div>
 );
 
 Iztrolabe.args = {

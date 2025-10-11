@@ -1,8 +1,129 @@
 // src/App.tsx
-import React, { useState } from 'react';
+//import React, { useState } from 'react';
+// --- 修改后 ---
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import { Iztrolabe } from './Iztrolabe';
 import type { AstrolabeData, HoroscopeData } from 'iztro/lib/data/types';
 import './App.css';
+
+
+
+// ... (所有 import 语句结束之后)
+// --- 在这里粘贴下面的代码 --- //
+// ===================================================================
+// STEP 1: 定义响应式包裹组件
+// ===================================================================
+// const ResponsiveAstrolabe: React.FC<IztrolabeProps> = (props) => {
+//   // 定义排盘的设计基准宽度，所有缩放都以此为参考
+//   const BASE_WIDTH = 600;
+//   // 创建 Refs 来引用 DOM 元素
+//   const wrapperRef = useRef<HTMLDivElement>(null);
+//   const astrolabeRef = useRef<HTMLDivElement | null>(null);
+//   // 使用 useLayoutEffect 确保在浏览器绘制前完成计算，防止闪烁
+//   useLayoutEffect(() => {
+//     // 动态查找 Iztrolabe 组件渲染出的 .iztro-astrolabe 元素
+//     if (wrapperRef.current) {
+//       astrolabeRef.current = wrapperRef.current.querySelector('.iztro-astrolabe');
+//     }
+//     const calculateScale = () => {
+//       if (!wrapperRef.current || !astrolabeRef.current) {
+//         return;
+//       }
+//       // 1. 计算缩放比例
+//       const currentWidth = wrapperRef.current.getBoundingClientRect().width;
+//       const scale = currentWidth / BASE_WIDTH;
+//       if (scale <= 0) return;
+//       // 2. 应用 transform 缩放
+//       astrolabeRef.current.style.transform = `scale(${scale})`;
+//       astrolabeRef.current.style.transformOrigin = 'top left'; // 确保从左上角缩放
+//       // 3. 动态修正高度，防止布局塌陷
+//       const originalHeight = astrolabeRef.current.getBoundingClientRect().height / scale;
+//       wrapperRef.current.style.height = `${originalHeight * scale}px`;
+//     };
+//     // 首次加载和窗口尺寸变化时执行计算
+//     calculateScale();
+//     window.addEventListener('resize', calculateScale);
+//     // 组件卸载时清理事件监听器
+//     return () => {
+//       window.removeEventListener('resize', calculateScale);
+//     };
+//   }, [props]); // 当 props 变化（例如重新排盘）时，重新执行 effect
+//   return (
+//       <div className="astrolabe-scaler-wrapper" ref={wrapperRef}>
+//         <Iztrolabe {...props} />
+//       </div>
+//   );
+// };
+
+// src/App.tsx
+
+// ... (imports)
+
+// ===================================================================
+// STEP 1: 定义响应式包裹组件 (优化版)
+// ===================================================================
+const ResponsiveAstrolabe: React.FC<IztrolabeProps> = (props) => {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const astrolabeRef = useRef<HTMLDivElement | null>(null);
+
+  useLayoutEffect(() => {
+    if (wrapperRef.current) {
+      astrolabeRef.current = wrapperRef.current.querySelector('.iztro-astrolabe');
+    }
+
+    const calculateScale = () => {
+      if (!wrapperRef.current || !astrolabeRef.current) {
+        return;
+      }
+
+      // --- 优化点：直接从DOM获取基准宽度 ---
+      // getBoundingClientRect() 会返回元素的实际渲染尺寸，不受transform影响
+      const baseWidth = astrolabeRef.current.getBoundingClientRect().width;
+
+      // 如果已经有 transform，我们需要把它除掉来获得原始宽度
+      // 但一个更简单的方法是假设第一次计算时没有 transform
+      // 更好的是，我们可以直接用 offsetWidth，它不受 transform 影响
+      const originalWidth = astrolabeRef.current.offsetWidth;
+
+      const containerWidth = wrapperRef.current.getBoundingClientRect().width;
+
+      // 防止除以0
+      if (originalWidth === 0) return;
+
+      const scale = containerWidth / originalWidth;
+
+      if (scale <= 0) return;
+
+      astrolabeRef.current.style.transform = `scale(${scale})`;
+
+      // 高度计算逻辑保持不变，但更健壮
+      const originalHeight = astrolabeRef.current.offsetHeight;
+      wrapperRef.current.style.height = `${originalHeight * scale}px`;
+    };
+
+    // 首次加载和窗口尺寸变化时执行计算
+    calculateScale();
+    window.addEventListener('resize', calculateScale);
+
+    return () => {
+      window.removeEventListener('resize', calculateScale);
+    };
+  }, [props]);
+
+  return (
+      <div className="astrolabe-scaler-wrapper" ref={wrapperRef}>
+        {/*
+        这里的 Iztrolabe 组件渲染出的 .iztro-astrolabe 元素
+        现在会应用 App.css 中新增的 absolute 定位样式
+      */}
+        <Iztrolabe {...props} />
+      </div>
+  );
+};
+
+// ... (App 组件保持不变)
+
+
 
 // 定义一个精简数据类型的接口，以便在App组件中使用
 interface PrunedAstrolabeData {
@@ -141,7 +262,16 @@ function App() {
         </header>
 
         <main className="chart-container">
-          <Iztrolabe
+          {/*<Iztrolabe*/}
+          {/*    birthday={birthday}*/}
+          {/*    birthTime={birthTime}*/}
+          {/*    gender={gender}*/}
+          {/*    birthdayType='solar'*/}
+          {/*    onDataChange={(data) => setAstrolabeData(data.astrolabe)} // 接收 Iztrolabe 组件传出的数据*/}
+          {/*/>*/}
+
+
+          <ResponsiveAstrolabe
               birthday={birthday}
               birthTime={birthTime}
               gender={gender}

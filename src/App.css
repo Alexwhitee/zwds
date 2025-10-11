@@ -1,5 +1,51 @@
 /* src/App.css */
 
+/* 用于缩放的包裹容器 */
+.astrolabe-scaler-wrapper {
+    position: relative; /* 为高度计算提供基准 */
+    width: 100%;
+    /* 高度将由JS动态设置 */
+}
+
+/* 对排盘本身应用 transform */
+.astrolabe-scaler-wrapper .iztro-astrolabe {
+    /*
+     * transform-origin 是缩放的基点。
+     * 'top left' 表示从左上角开始缩放，
+     * 这样我们只需要计算宽度比例，实现起来最简单。
+    */
+    transform-origin: top left;
+    position: absolute; /* 关键：让排盘脱离文档流 */
+    top: 0;
+    left: 0;
+    width: 600px; /* 明确指定其原始尺寸，与JS中的BASE_WIDTH一致 */
+
+
+
+    z-index: 1; /* 关键：确保排盘在上层 */
+    /* transform 属性将由JS动态设置 */
+}
+
+/* 新增：为JSON查看器区域设置较低的z-index */
+.iztrolabe-wrapper .json-viewer-section {
+    position: relative;
+    z-index: 0; /* 确保在排盘之下 */
+    background-color: white;
+    margin-top: 10px;
+}
+/* 可选：改善JSON查看器样式 */
+.json-viewer-container {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+
+
+
 /* --- 全局和基础样式 --- */
 body {
     margin: 0;
@@ -79,18 +125,18 @@ body {
     max-width: 800px; /* 在大屏幕上与其它区域保持一致 */
 }
 
-.astrolabe-responsive-wrapper {
-    overflow-x: auto; /* 允许水平滑动 */
-    padding-bottom: 10px; /* 给滚动条一些空间 */
-    /* 将渐隐区域从5%缩窄到1%，保留提示但改善可读性 */
+/*.astrolabe-responsive-wrapper {*/
+/*    overflow-x: auto; !* 允许水平滑动 *!*/
+/*    padding-bottom: 10px; !* 给滚动条一些空间 *!*/
+/*    !* 将渐隐区域从5%缩窄到1%，保留提示但改善可读性 *!*/
 
-}
+/*}*/
 
 
-/* 让命盘本身有一个最小宽度，防止在滑动容器内被压缩 */
-.astrolabe-responsive-wrapper .iztro-astrolabe {
-    min-width: 600px; /* 设定一个不会导致文字重叠的最小宽度 */
-}
+/*!* 让命盘本身有一个最小宽度，防止在滑动容器内被压缩 *!*/
+/*.astrolabe-responsive-wrapper .iztro-astrolabe {*/
+/*    min-width: 450px; !* 设定一个不会导致文字重叠的最小宽度 *!*/
+/*}*/
 
 
 /* --- AI 解读区域表单 --- */
@@ -211,3 +257,132 @@ body {
         flex-wrap: nowrap;
     }
 }
+/* App.css */
+
+/* ... (文件原有内容) ... */
+
+/* 用于缩放的包裹容器 */
+.astrolabe-scaler-wrapper {
+    position: relative;
+    width: 100%;
+    /* 高度将由JS动态设置 */
+}
+
+
+/* 关键修改：排盘现在相对于其占位容器绝对定位 */
+.astrolabe-scaler-wrapper .astrolabe-placeholder .iztro-astrolabe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 600px;
+    transform-origin: top left;
+    z-index: 1;
+}
+/* 确保占位容器有正确的定位上下文 */
+.iztrolabe-wrapper .astrolabe-placeholder {
+    position: relative;
+    width: 100%;
+}
+/* JSON查看器区域样式 */
+.iztrolabe-wrapper .json-viewer-section {
+    position: relative;
+    background-color: white;
+    clear: both; /* 确保清除任何浮动 */
+}
+/* 可选：改善整体布局 */
+.iztrolabe-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* App.css */
+
+/* 保持原有的缩放容器样式 */
+.astrolabe-scaler-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.astrolabe-scaler-wrapper .iztro-astrolabe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 600px;
+    transform-origin: top left;
+}
+
+/* 新增：为 Iztrolabe 组件的外层容器添加样式 */
+.iztrolabe-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* 确保 JSON 查看器区域在正常文档流中 */
+.json-viewer-section {
+    position: relative;
+    z-index: 1;
+    background-color: white;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+/* 可选：为 JSON 查看器添加一些样式改进 */
+.json-viewer-container {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+
+
