@@ -544,8 +544,7 @@
 
 
 // src/Iztrolabe/Iztrolabe.tsx
-import React, { useEffect, useMemo, useState, useRef, useLayoutEffect } from "react";
-import { JsonViewer } from "../JsonViewer/JsonViewer";
+import React, { useEffect, useMemo, useState } from "react";
 import { Izpalace } from "../Izpalace/Izpalace";
 import { IztrolabeProps } from "./Iztrolabe.type";
 import { IzpalaceCenter } from "../IzpalaceCenter";
@@ -563,7 +562,6 @@ interface IztrolabeComponentProps extends IztrolabeProps {
 }
 
 export const Iztrolabe: React.FC<IztrolabeComponentProps> = (props) => {
-  const [isJsonVisible, setIsJsonVisible] = useState(false);
   const [taichiPoint, setTaichiPoint] = useState(-1);
   const [taichiPalaces, setTaichiPalaces] = useState<undefined | string[]>();
   const [activeHeavenlyStem, setActiveHeavenlyStem] = useState<HeavenlyStemKey>();
@@ -577,10 +575,6 @@ export const Iztrolabe: React.FC<IztrolabeComponentProps> = (props) => {
   const [horoscopeDate, setHoroscopeDate] = useState<string | Date>();
   const [horoscopeHour, setHoroscopeHour] = useState<number>();
 
-  // 新增：用于测量排盘实际高度的ref
-  const astrolabeRef = useRef<HTMLDivElement>(null);
-  const [astrolabeHeight, setAstrolabeHeight] = useState<number>(0);
-
   const { astrolabe, horoscope, setHoroscope } = useIztro({
     birthday: props.birthday,
     birthTime: props.birthTime,
@@ -593,26 +587,9 @@ export const Iztrolabe: React.FC<IztrolabeComponentProps> = (props) => {
     options: props.options,
   });
 
-  // 当命盘数据变化时，通过回调函数传给父组件 App.tsx
   useEffect(() => {
     props.onDataChange({ astrolabe, horoscope });
   }, [astrolabe, horoscope, props]);
-
-  // 新增：测量排盘实际高度
-  useLayoutEffect(() => {
-    if (astrolabeRef.current) {
-      const updateHeight = () => {
-        const rect = astrolabeRef.current!.getBoundingClientRect();
-        setAstrolabeHeight(rect.height);
-      };
-
-      updateHeight();
-
-      // 监听窗口大小变化
-      window.addEventListener('resize', updateHeight);
-      return () => window.removeEventListener('resize', updateHeight);
-    }
-  }, [astrolabe]); // 当astrolabe数据变化时重新计算
 
   const toggleShowScope = (scope: Scope) => {
     switch (scope) {
@@ -657,7 +634,6 @@ export const Iztrolabe: React.FC<IztrolabeComponentProps> = (props) => {
     if (props.horoscopeDate) {
       setHoroscopeDate(props.horoscopeDate);
     }
-
     if (props.horoscopeHour !== undefined) {
       setHoroscopeHour(props.horoscopeHour);
     }
@@ -674,12 +650,10 @@ export const Iztrolabe: React.FC<IztrolabeComponentProps> = (props) => {
       const palaceNames = getPalaceNames("zh-CN");
       const startIdx = taichiPoint;
       const result: string[] = [];
-
       for (let i = 0; i < 12; i++) {
         const idx = (startIdx + i) % 12;
         result[i] = palaceNames[idx];
       }
-
       setTaichiPalaces(result);
     } else {
       setTaichiPalaces(undefined);
@@ -695,89 +669,39 @@ export const Iztrolabe: React.FC<IztrolabeComponentProps> = (props) => {
   };
 
   return (
-      <div className="iztrolabe-wrapper">
-        {/* 排盘区域：创建一个占位容器，其高度等于实际排盘高度 */}
-        <div
-            className="astrolabe-placeholder"
-            style={{
-              height: astrolabeHeight > 0 ? `${astrolabeHeight}px` : 'auto',
-              position: 'relative',
-              minHeight: '400px' // 设置最小高度，避免初始渲染时高度为0
-            }}
-        >
-          {/* 实际的排盘 */}
-          <div
-              ref={astrolabeRef}
-              className={classNames("iztro-astrolabe", "iztro-astrolabe-theme-default")}
-          >
-            {astrolabe?.palaces.map((palace) => (
-                <Izpalace
-                    key={palace.earthlyBranch}
-                    {...palace}
-                    focusedIndex={focusedIndex}
-                    onFocused={setFocusedIndex}
-                    horoscope={horoscope}
-                    showDecadalScope={showDecadal}
-                    showYearlyScope={showYearly}
-                    showMonthlyScope={showMonthly}
-                    showDailyScope={showDaily}
-                    showHourlyScope={showHourly}
-                    taichiPalace={taichiPalaces?.[palace.index]}
-                    toggleScope={toggleShowScope}
-                    activeHeavenlyStem={activeHeavenlyStem}
-                    toggleActiveHeavenlyStem={toggleActiveHeavenlyStem}
-                    hoverHeavenlyStem={hoverHeavenlyStem}
-                    setHoverHeavenlyStem={setHoverHeavenlyStem}
-                    toggleTaichiPoint={toggleTaichiPoint}
-                />
-            ))}
-            <IzpalaceCenter
-                astrolabe={astrolabe}
+      <div className={classNames("iztro-astrolabe", "iztro-astrolabe-theme-default")}>
+        {astrolabe?.palaces.map((palace) => (
+            <Izpalace
+                key={palace.earthlyBranch}
+                {...palace}
+                focusedIndex={focusedIndex}
+                onFocused={setFocusedIndex}
                 horoscope={horoscope}
-                horoscopeDate={horoscopeDate}
-                horoscopeHour={horoscopeHour}
-                setHoroscopeDate={setHoroscopeDate}
-                setHoroscopeHour={setHoroscopeHour}
-                centerPalaceAlign={props.centerPalaceAlign}
-                {...dynamic}
+                showDecadalScope={showDecadal}
+                showYearlyScope={showYearly}
+                showMonthlyScope={showMonthly}
+                showDailyScope={showDaily}
+                showHourlyScope={showHourly}
+                taichiPalace={taichiPalaces?.[palace.index]}
+                toggleScope={toggleShowScope}
+                activeHeavenlyStem={activeHeavenlyStem}
+                toggleActiveHeavenlyStem={toggleActiveHeavenlyStem}
+                hoverHeavenlyStem={hoverHeavenlyStem}
+                setHoverHeavenlyStem={setHoverHeavenlyStem}
+                toggleTaichiPoint={toggleTaichiPoint}
             />
-          </div>
-        </div>
-
-        {/* JSON 查看器区域：现在它会自然地显示在占位容器的下方 */}
-        <div className="json-viewer-section">
-          <div className="json-viewer-controls" style={{ marginTop: '20px', textAlign: 'center' }}>
-            <button
-                onClick={() => setIsJsonVisible(!isJsonVisible)}
-                style={{
-                  padding: '8px 16px',
-                  cursor: 'pointer',
-                  fontSize: '14px',
-                  borderRadius: '4px',
-                  border: '1px solid #ccc',
-                  backgroundColor: '#f8f9fa',
-                  transition: 'background-color 0.2s'
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e9ecef'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
-            >
-              {isJsonVisible ? "隐藏源数据" : "显示源数据"}
-            </button>
-          </div>
-          {isJsonVisible && (
-              <div className="json-viewer-container" style={{
-                marginTop: '15px',
-                border: '1px solid #e0e0e0',
-                borderRadius: '6px',
-                padding: '15px',
-                backgroundColor: '#f8f9fa',
-                maxHeight: '400px',
-                overflowY: 'auto'
-              }}>
-                <JsonViewer data={{ astrolabe, horoscope }} />
-              </div>
-          )}
-        </div>
+        ))}
+        <IzpalaceCenter
+            astrolabe={astrolabe}
+            horoscope={horoscope}
+            horoscopeDate={horoscopeDate}
+            horoscopeHour={horoscopeHour}
+            setHoroscopeDate={setHoroscopeDate}
+            setHoroscopeHour={setHoroscopeHour}
+            centerPalaceAlign={props.centerPalaceAlign}
+            {...dynamic}
+        />
       </div>
   );
 };
+
