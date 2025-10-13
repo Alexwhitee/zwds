@@ -1018,3 +1018,277 @@ body {
         font-size: 13px;
     }
 }
+
+
+/* src/App.css */
+
+/* ... (文件中其他样式保持不变) ... */
+
+/* ===================================================================
+   AI 响应区域 - 样式更新
+   =================================================================== */
+.ai-response-area {
+    margin-top: 20px;
+}
+
+.ai-error {
+    color: #d9534f;
+    background-color: #f2dede;
+    border: 1px solid #ebccd1;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+/* 响应内容的总容器 */
+.ai-response {
+    background-color: #f9f9f9;
+    border: 1px solid #e7e7e7;
+    border-radius: 6px;
+    padding: 15px 20px; /* 增加左右内边距 */
+    min-height: 100px;
+    line-height: 1.7;   /* 增加行高以提高可读性 */
+    font-size: 16px;    /* 设定基础字体大小 */
+    color: #333;
+}
+
+/* 移除旧的 pre 样式，因为它不再被使用 */
+/* .ai-response pre { ... } */
+
+/* --- 为 Markdown 元素添加新样式 --- */
+
+/* 段落 */
+.ai-response p {
+    margin-top: 0;
+    margin-bottom: 1em; /* 段落间距 */
+}
+
+/* 标题 */
+.ai-response h1,
+.ai-response h2,
+.ai-response h3,
+.ai-response h4 {
+    margin-top: 1.5em;
+    margin-bottom: 0.8em;
+    color: #5c2c90; /* 使用主题色 */
+    line-height: 1.3;
+    font-weight: 600;
+}
+
+.ai-response h1 { font-size: 1.8em; }
+.ai-response h2 { font-size: 1.5em; border-bottom: 1px solid #eee; padding-bottom: 0.3em; }
+.ai-response h3 { font-size: 1.25em; }
+.ai-response h4 { font-size: 1.0em; }
+
+/* 列表 (无序和有序) */
+.ai-response ul,
+.ai-response ol {
+    padding-left: 2em;
+    margin-bottom: 1em;
+}
+
+.ai-response li {
+    margin-bottom: 0.5em;
+}
+
+/* 粗体 */
+.ai-response strong {
+    font-weight: 600;
+}
+
+/* 引用块 */
+.ai-response blockquote {
+    margin: 1em 0;
+    padding: 0.5em 1em;
+    border-left: 4px solid #ccc;
+    background-color: #f0f0f0;
+    color: #666;
+}
+
+.ai-response blockquote p {
+    margin-bottom: 0;
+}
+
+/* 代码块 */
+.ai-response pre {
+    background-color: #2d2d2d;
+    color: #f8f8f2;
+    padding: 1em;
+    border-radius: 6px;
+    overflow-x: auto; /* 代码过长时可以横向滚动 */
+    white-space: pre;
+    word-wrap: normal;
+}
+
+.ai-response code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+}
+
+.ai-response pre code {
+    background: none;
+    padding: 0;
+}
+
+/* 行内代码 */
+.ai-response :not(pre) > code {
+    background-color: #eef;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+}
+
+/* 表格 */
+.ai-response table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+    display: block;
+    overflow-x: auto;
+}
+
+.ai-response th,
+.ai-response td {
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+.ai-response th {
+    background-color: #f2f2f2;
+    font-weight: 600;
+}
+
+/* ... (文件中其他样式保持不变) ... */
+/* src/App.css */
+
+/* ... 文件中所有已存在的样式保持不变 ... */
+
+
+/* ===================================================================
+   页脚链接区域
+   =================================================================== */
+.footer-links {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    padding: 10px 20px 20px 20px; /* 顶部留白少一些，底部多一些 */
+    border-top: 1px solid #e0e0e0; /* 与上方内容区有一个视觉分割线 */
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* 在小屏幕上换行 */
+    gap: 20px; /* 链接之间的间距 */
+}
+
+.footer-links a,
+.footer-links .contact-button {
+    color: #6a3da3; /* 使用您的主题色 */
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: all 0.2s ease-in-out;
+}
+
+/* 鼠标悬停效果，让用户明确知道可以点击 */
+.footer-links a:hover,
+.footer-links .contact-button:hover {
+    color: #fff;
+    background-color: #5c2c90;
+    text-decoration: none;
+}
+
+/* 联系方式按钮的特定样式，使其看起来像链接 */
+.footer-links .contact-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit; /* 继承父级字体 */
+}
+
+/* ===================================================================
+   联系方式弹窗 (Modal) 样式
+   =================================================================== */
+/* 遮罩层 */
+.modal-overlay {
+    position: fixed; /* 固定定位，覆盖整个视口 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* 半透明黑色背景 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* 确保在最上层 */
+    animation: fadeIn 0.3s ease; /* 淡入动画 */
+}
+
+/* 弹窗内容 */
+.modal-content {
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    width: 90%;
+    max-width: 320px;
+    text-align: center;
+    animation: slideIn 0.3s ease; /* 滑入动画 */
+}
+
+.modal-content h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.modal-content p {
+    margin-top: 15px;
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* 二维码图片 */
+.qr-code-image {
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border: 1px solid #eee;
+    border-radius: 4px;
+}
+
+/* 关闭按钮 */
+.modal-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    line-height: 1;
+    color: #aaa;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.modal-close-button:hover {
+    color: #333;
+}
+
+/* 简单的淡入和滑入动画 */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}

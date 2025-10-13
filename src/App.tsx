@@ -582,6 +582,10 @@
 //
 // export default App;
 // src/App.tsx
+
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+
 import React, { useState, useRef, useLayoutEffect } from 'react';
 import { Iztrolabe } from './Iztrolabe/Iztrolabe';
 import { JsonViewer } from './JsonViewer/JsonViewer';
@@ -662,6 +666,12 @@ function App() {
 
   // --- JSON 查看器 State ---
   const [isJsonVisible, setIsJsonVisible] = useState(false);
+
+
+
+  // --- 新增代码: 为联系方式弹窗创建状态 ---
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   // const modelOptions = [
   //   {
@@ -830,7 +840,7 @@ function App() {
         </main>
 
         <section className="ai-interpretation-section">
-          <h3>AI 智能解读</h3>
+          <h3>AI 限时免费解读</h3>
           <div className="ai-form">
             <div className="ai-form-item">
               <label htmlFor="ai-model">选择模型:</label>
@@ -845,7 +855,7 @@ function App() {
               </select>
             </div>
             <div className="ai-form-item ai-form-item-full">
-              <label htmlFor="ai-question">您想问什么？</label>
+              <label htmlFor="ai-question">请输入您的具体问题（空白默认命盘整体分析）</label>
               <textarea id="ai-question" rows={3} value={aiQuestion} onChange={(e) => setAiQuestion(e.target.value)} placeholder="例如：请帮我分析一下我的事业发展方向和机遇。" />
             </div>
           </div>
@@ -855,7 +865,16 @@ function App() {
           <div className="ai-response-area">
             {isLoadingAI && <div className="loader"></div>}
             {aiError && <p className="ai-error">错误: {aiError}</p>}
-            {aiResponse && (<div className="ai-response"><pre>{aiResponse}</pre></div>)}
+            {/*{aiResponse && (<div className="ai-response"><pre>{aiResponse}</pre></div>)}*/}
+
+            {/* --- 修改点 2: 使用 ReactMarkdown 替换 pre 标签 --- */}
+            {aiResponse && (
+                <div className="ai-response">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {aiResponse}
+                  </ReactMarkdown>
+                </div>
+            )}
           </div>
         </section>
 
@@ -875,6 +894,46 @@ function App() {
               </div>
           )}
         </section>
+
+
+
+
+        {/* --- 新增代码: 添加页脚链接区域 --- */}
+        <footer className="footer-links">
+          <a href="https://www.xyy.abrdns.com/" target="_blank" rel="noopener noreferrer">网页访问</a>
+          <a href="https://www.zb.abrdns.com/" target="_blank" rel="noopener noreferrer">排盘网站</a>
+          <a href="https://www.yunxi.abrdns.com/" target="_blank" rel="noopener noreferrer">博客</a>
+          {/* 使用 button 触发弹窗是更合适的做法 */}
+          <button onClick={() => setIsModalOpen(true)} className="contact-button">
+            联系方式
+          </button>
+        </footer>
+        {/* --- 新增代码: 联系方式弹窗 (Modal) --- */}
+        {isModalOpen && (
+            // 遮罩层，点击可以关闭弹窗
+            <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
+              {/* 弹窗内容区，阻止事件冒泡以防点击内容区关闭弹窗 */}
+              <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                <button
+                    className="modal-close-button"
+                    onClick={() => setIsModalOpen(false)}
+                >
+                  &times; {/* 这是一个漂亮的关闭图标 "×" */}
+                </button>
+                <h4>联系方式</h4>
+                <img
+                    src="/wechat-qr.png" // 对应 public 文件夹中的图片
+                    alt="微信二维码"
+                    className="qr-code-image"
+                />
+                <p>可截图并用微信扫一扫添加好友</p>
+              </div>
+            </div>
+        )}
+
+
+
+
       </div>
   );
 }
