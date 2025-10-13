@@ -903,6 +903,7 @@ function App() {
           <a href="https://www.xyy.abrdns.com/" target="_blank" rel="noopener noreferrer">网页访问</a>
           <a href="https://www.zb.abrdns.com/" target="_blank" rel="noopener noreferrer">排盘网站</a>
           <a href="https://www.yunxi.abrdns.com/" target="_blank" rel="noopener noreferrer">博客</a>
+          <a href="https://www.yunxi.abrdns.com/app/明心紫微斗数.apk" target="_blank" rel="noopener noreferrer">app下载</a>
           {/* 使用 button 触发弹窗是更合适的做法 */}
           <button onClick={() => setIsModalOpen(true)} className="contact-button">
             联系方式
