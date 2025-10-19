@@ -716,6 +716,15 @@ function App() {
       options: [
         { label: 'mistral-medium', value: 'mistral-medium-2508' }
       ]
+    },
+    {
+      label: 'Ge',
+      options: [
+        { label: 'gemini-2.5-flash-lite', value: 'gemini-2.5-flash-lite' },
+        { label: 'gemini-2.5-flash', value: 'gemini-2.5-flash' },
+        { label: 'gemini-2.5-pro', value: 'gemini-2.5-pro' }
+
+      ]
     }
   ];
 
@@ -903,7 +912,8 @@ function App() {
           <a href="https://www.xyy.abrdns.com/" target="_blank" rel="noopener noreferrer">网页访问</a>
           <a href="https://www.zb.abrdns.com/" target="_blank" rel="noopener noreferrer">排盘网站</a>
           <a href="https://www.yunxi.abrdns.com/" target="_blank" rel="noopener noreferrer">博客</a>
-          <a href="https://www.yunxi.abrdns.com/app/明心紫微斗数.apk" target="_blank" rel="noopener noreferrer">app下载</a>
+          <a href="https://pan.baidu.com/s/1qB4SWwICGz-pewb0MRDv1Q?pwd=qwer/" target="_blank" rel="noopener noreferrer">app下载</a>
+          <a href="https://wwaaa.lanzouq.com/b016kbaeqf/" target="_blank" rel="noopener noreferrer">备用(qwer）</a>
           {/* 使用 button 触发弹窗是更合适的做法 */}
           <button onClick={() => setIsModalOpen(true)} className="contact-button">
             联系方式

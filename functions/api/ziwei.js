@@ -225,6 +225,12 @@ const API_PROVIDERS = {
         modelMatcher: (model) => model.includes('/'),
         buildRequestBody: openAICompatibleBodyBuilder
     },
+    gemini: {
+        baseUrl: "https://mfrjmtvdedcx.ap-northeast-1.clawcloudrun.com/v1/chat/completions",
+        apiKeyEnv: 'GEMINI_API_KEY',
+        modelMatcher: (model) => model.includes('/'),
+        buildRequestBody: openAICompatibleBodyBuilder
+    },
 };
 
 // 处理 CORS 预检请求
