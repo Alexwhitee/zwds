@@ -228,7 +228,7 @@ const API_PROVIDERS = {
     gemini: {
         baseUrl: "https://mfrjmtvdedcx.ap-northeast-1.clawcloudrun.com/v1/chat/completions",
         apiKeyEnv: 'GEMINI_API_KEY',
-        modelMatcher: (model) => model.includes('/'),
+        modelMatcher: (model) => ['gemini-2.5-flash', 'gemini-2.5-flash-lite', 'gemini-2.5-pro'].includes(model),
         buildRequestBody: openAICompatibleBodyBuilder
     },
 };
