@@ -910,7 +910,7 @@ function App() {
         {/* --- 新增代码: 添加页脚链接区域 --- */}
         <footer className="footer-links">
           <a href="https://www.xyy.abrdns.com/" target="_blank" rel="noopener noreferrer">网页访问</a>
-          <a href="https://www.zb.abrdns.com/" target="_blank" rel="noopener noreferrer">排盘网站</a>
+          <a href="https://www.zb.abrdns.com/" target="_blank" rel="noopener noreferrer">明心占卜排盘</a>
           <a href="https://www.yunxi.abrdns.com/" target="_blank" rel="noopener noreferrer">博客</a>
           <a href="https://pan.baidu.com/s/1qB4SWwICGz-pewb0MRDv1Q?pwd=qwer/" target="_blank" rel="noopener noreferrer">app下载</a>
           <a href="https://wwaaa.lanzouq.com/b016kbaeqf/" target="_blank" rel="noopener noreferrer">备用(qwer）</a>
